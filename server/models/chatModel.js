@@ -15,13 +15,14 @@ const chatSchema = new mongoose.Schema({
   },
   sender: {
     type: mongoose.Schema.ObjectId,
-    ref: "user",
+    ref: "User",
   },
   reciever: {
     type: mongoose.Schema.ObjectId,
-    ref: "user",
+    ref: "User",
   },
 });
 chatSchema.index({ sender: 1 });
 chatSchema.index({ reciever: 1 });
-mongoose.exports = mongoose.model("Chat", chatSchema);
+
+module.exports = mongoose.model("Chat", chatSchema);
