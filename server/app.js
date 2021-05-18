@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const chatRoute = require("./routes/chatRoutes");
 const bodyParser = require("body-parser");
+const userRoute = require("./routes/userRoutes");
 
 app.use(bodyParser.json());
 
@@ -21,6 +22,7 @@ mongoose
     console.log("Database Successfully Connected");
   });
 
+app.use("/v1/users/", userRoute);
 app.use("/v1/chat/", chatRoute);
 
 const port = process.env.PORT || 5000;
@@ -33,13 +35,26 @@ const server = socketServer.listen(port, (err) => {
   console.log(`App running on port ${port}...`);
 });
 
+const chatModel = require("./models/chatModel");
+const userModel = require("./models/userModel");
+
 const io = require("socket.io")(socketServer);
-const STATIC_CHANNELS = ["global_notifications", "global_chat"];
-// const usersMapWithClientIdAndUserId = {};
-// const usersMapWithUserIdAndClientId = {};
+
 io.on("connection", (client) => {
   console.log("connection establised");
-  client.emit("connection", null);
+  client.on("joinToRoom", (roomId) => {
+    client.join(roomId);
+  });
+  client.on("messageFromClient", async (clientData) => {
+    // write to DB
+    const chatMessage = await chatModel.create({
+      message: clientData.message,
+      sender: clientData.senderId,
+      reciever: clientData.recieverId,
+    });
+    // emit to room to roomID
+    client.to(clientData.roomId).emit("messageFromServer", clientData);
+  });
 });
 
 app.all("*", (req, res, next) => {
