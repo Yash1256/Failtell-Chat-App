@@ -88,6 +88,24 @@ exports.protectAccess = async (req, res, next) => {
   next();
 };
 
+exports.isLoggedIn = async (req, res, next) => {
+  let token = undefined;
+  if (req.cookies && req.cookies.jwt) token = req.cookies.jwt;
+  console.log(token);
+
+  if (!token) {
+    return res.status(401).json({
+      message: "You are not logged in",
+    });
+  }
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const currentUser = await User.findById(decoded.id);
+  req.user = currentUser;
+  res.locals.user = currentUser;
+  return res.status(200).json({
+    message: "user is loggedIn",
+  });
+};
 exports.assignRoom = async (req, res) => {
   const userId = req.user.id;
   const assignWith = req.params.chatWithUsername;
