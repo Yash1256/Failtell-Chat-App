@@ -1,0 +1,60 @@
+.P2PChatBox {
+  height: 100%;
+  width: 100%;
+  background-color: yellowgreen;
+}
+.rightBlockHeader {
+  height: 70px;
+  background-color: teal;
+  width: 100%;
+}
+.rightBlockFooter {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  width: 70%;
+  background-color: teal;
+}
+.chatHere {
+  background-color: tomato;
+  width: 100%;
+  height: calc(100% - 120px);
+}
+.chatInput {
+  width: calc(90% - 60px);
+  margin: 7px 10px 7px 15px;
+  height: 30px;
+  border-radius: 10px;
+  outline: 0;
+  border: 1px solid black;
+  font-size: 16px;
+  font-family: cursive;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.chatSubmitBtn {
+  border-radius: 10px;
+  margin: 7px 10px 7px 0px;
+  height: 34px;
+  outline: 0;
+  border: 1px solid black;
+  width: 10%;
+}
+.right-avatar {
+  margin: 5px 10px 0px 12px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  float: left;
+  border-radius: 50%;
+}
+.right-username {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: cursive;
+}
+.extraWith {
+  width: calc(100% - 85px);
+  padding-top: 10px;
+  background-color: brown;
+}
