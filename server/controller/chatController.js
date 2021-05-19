@@ -11,12 +11,12 @@ exports.startUserChat = async (req, res, next) => {
   const endUser = await User.find({
     username: req.body.username,
   });
-  console.log(req.user);
+  // console.log(req.user);
   if (endUser) {
     const createdChat = await chatting.create({
       message: req.body.message,
-      sender: req.user.id,
-      reciever: endUser[0].id,
+      // sender: req.user.id,
+      // reciever: endUser[0].id,
       createdDate: Date.now(),
     });
     return res.status(200).json({
@@ -31,7 +31,7 @@ exports.startUserChat = async (req, res, next) => {
 };
 
 exports.getUserChats = async (req, res) => {
-  console.log(req.query);
+  // console.log(req.query);
   const getChat = await chatting
     .find({
       $or: [

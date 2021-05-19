@@ -43,17 +43,20 @@ const io = require("socket.io")(socketServer);
 io.on("connection", (client) => {
   console.log("connection establised");
   client.on("joinToRoom", (roomId) => {
+    // console.log(roomId);
     client.join(roomId);
   });
   client.on("messageFromClient", async (clientData) => {
     // write to DB
-    const chatMessage = await chatModel.create({
-      message: clientData.message,
-      sender: clientData.senderId,
-      reciever: clientData.recieverId,
-    });
+    // const chatMessage = await chatModel.create({
+    //   message: clientData.message,
+    //   sender: clientData.senderId,
+    //   reciever: clientData.recieverId,
+    // });
     // emit to room to roomID
+    // console.log("Client", clientData.roomId);
     client.to(clientData.roomId).emit("messageFromServer", clientData);
+    // client.broadcast.emit("messageFromServer", clientData);
   });
 });
 

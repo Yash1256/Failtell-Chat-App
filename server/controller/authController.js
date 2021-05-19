@@ -91,7 +91,7 @@ exports.protectAccess = async (req, res, next) => {
 exports.isLoggedIn = async (req, res, next) => {
   let token = undefined;
   if (req.cookies && req.cookies.jwt) token = req.cookies.jwt;
-  console.log(token);
+  // console.log(token);
 
   if (!token) {
     return res.status(401).json({
@@ -107,6 +107,7 @@ exports.isLoggedIn = async (req, res, next) => {
   });
 };
 exports.assignRoom = async (req, res) => {
+  // console.log("I camehere bhai");
   const userId = req.user.id;
   const assignWith = req.params.chatWithUsername;
   if (assignWith == req.user.username) {
@@ -114,6 +115,8 @@ exports.assignRoom = async (req, res) => {
       message: "You are not allowed chat with yourself here",
     });
   }
+  // console.log("Came here");
+  // console.log(assignWith);
   const searchUser = await User.findOne({ username: assignWith });
   if (searchUser) {
     var found = false,
@@ -151,4 +154,16 @@ exports.assignRoom = async (req, res) => {
   return res.status(404).json({
     message: "no user found with that username",
   });
+};
+
+exports.currentUser = async (req, res, next) => {
+  const user = await User.findOne({ username: req.params.username });
+  if (user) {
+    req.user = user;
+  } else {
+    return res.staus(404).json({
+      message: "Not Authorized",
+    });
+  }
+  next();
 };
