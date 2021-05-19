@@ -4,23 +4,9 @@ const test="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAoHCBUVFBcUF
 const onChangeEvent=(event)=>{
 
 }
-
-function scrollBarToBottom() {
-    const scrollBar =document.querySelector('.chatHere');
-    scrollBar.scrollTop = scrollBar.scrollHeight - scrollBar.clientHeight;
-}
-const addMessageIntoChatbox = (message,classToBeAdded)=>{
-    const newDiv=document.createElement('div');
-    newDiv.innerHTML=`<div class="onBothSide ${classToBeAdded}">
-                        ${message}
-                    </div>`;
-    document.querySelector('.chatHere').append(newDiv);
-    scrollBarToBottom();
-}
-
 const sendMessage =(event)=>{
      const message = event.target.closest('.rightBlockFooter').querySelector('.chatInput').value;
-     addMessageIntoChatbox(message,'fromYou')
+     console.log(message);   
 }
 export const P2PChatBox = ()=>{
     return (
@@ -34,7 +20,7 @@ export const P2PChatBox = ()=>{
                 </span>
             </div>
             <div className="chatHere">
-               
+
             </div>
             <div className="rightBlockFooter">
                 <input onChange={onChangeEvent} className="chatInput" type="text" />

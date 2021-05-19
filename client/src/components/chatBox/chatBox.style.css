@@ -17,10 +17,7 @@
 }
 .chatHere {
   background-color: tomato;
-  overflow: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: calc(100% - 40px);
+  width: 100%;
   height: calc(100% - 120px);
 }
 .chatInput {
@@ -60,21 +57,4 @@
   width: calc(100% - 85px);
   padding-top: 10px;
   background-color: brown;
-}
-.onBothSide {
-  clear: both;
-  min-width: 40px;
-  max-width: 40%;
-  background-color: rgb(48, 233, 72);
-  border: 1px solid black;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-.fromYou {
-  border-radius: 10px;
-  float: right;
-}
-.fromMyFriends {
-  border-radius: 10px;
-  float: left;
 }
