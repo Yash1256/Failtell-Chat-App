@@ -10,7 +10,9 @@ router
   .get(authController.protectAccess, authController.logout);
 router.route("/isLoggedIn").get(authController.isLoggedIn);
 router
-  .route("/assignRoom/:chatWithUsername/:username")
-  .post(authController.currentUser, authController.assignRoom);
+  .route("/assignRoom/:chatWithUsername")
+  .post(authController.protectAccess, authController.assignRoom);
+
+router.route("/getMe").post(authController.protectAccess, authController.getMe);
 
 module.exports = router;

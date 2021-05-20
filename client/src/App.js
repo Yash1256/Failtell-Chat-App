@@ -4,17 +4,9 @@ import axios from "axios";
 import { FriendFilter } from "./components/searchBar/search.component";
 import { LeftBlockUserCard } from "./components/userBlock/userBlock.component";
 import { P2PChatBox } from "./components/chatBox/chatBox.component";
-// import { Authorization } from "./components/authorization/authorization.component";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./components/navbar/navbar.style.css";
 import { NavbarSearchBar } from "./components/searchBar/search.component";
-// import { currentUser } from "../../server/controller/authController";
-
-// const instance = axios.create({
-//   withCredentials: true,
-//   baseURL: SERVER,
-// });
-
 class App extends Component {
   constructor() {
     super();
@@ -24,15 +16,12 @@ class App extends Component {
       recentChat: [],
       username: "",
     };
-    // this.Authorization = this.Authorization.bind(this);
-    // this.ChatPage = this.ChatPage.bind(this);
   }
   onSubmitForm = async (event) => {
     event.preventDefault();
     const loginForm = event.target.closest("#loginForm");
     const userName = loginForm.querySelector("#username").value;
     const password = loginForm.querySelector("#password").value;
-    // console.log(userName, password);
     try {
       const res = await axios({
         method: "POST",
@@ -86,10 +75,6 @@ class App extends Component {
     }
   };
   ChatPage = () => {
-    // check her if user is logged in or not in future
-    // console.log(this);
-    // console.log(localStorage.getItem("rememberMe"));
-
     return (
       <div className="App">
         <this.Navbar />
@@ -110,7 +95,6 @@ class App extends Component {
   }
   logout = async () => {
     if (this.state.isloggedIn) {
-      console.log("I came here");
       try {
         const res = await axios({
           method: "GET",

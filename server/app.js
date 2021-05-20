@@ -43,7 +43,6 @@ const io = require("socket.io")(socketServer);
 io.on("connection", (client) => {
   console.log("connection establised");
   client.on("joinToRoom", (roomId) => {
-    // console.log(roomId);
     client.join(roomId);
   });
   client.on("messageFromClient", async (clientData) => {
@@ -54,7 +53,6 @@ io.on("connection", (client) => {
     //   reciever: clientData.recieverId,
     // });
     // emit to room to roomID
-    // console.log("Client", clientData.roomId);
     client.to(clientData.roomId).emit("messageFromServer", clientData);
     // client.broadcast.emit("messageFromServer", clientData);
   });

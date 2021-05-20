@@ -5,16 +5,16 @@ const authController = require("../controller/authController");
 const router = express.Router();
 
 router
-  .route("/createChat/:username")
-  .post(authController.currentUser, chatController.startUserChat);
+  .route("/createChat")
+  .post(authController.protectAccess, chatController.startUserChat);
 router
-  .route("/getUserChats/:username")
-  .get(authController.currentUser, chatController.getUserChats);
+  .route("/getUserChats")
+  .get(authController.protectAccess, chatController.getUserChats);
 router
-  .route("/deleteChats/:username")
-  .delete(authController.currentUser, chatController.deleteUserChat);
+  .route("/deleteChats")
+  .delete(authController.protectAccess, chatController.deleteUserChat);
 router
-  .route("/updateChat/:username")
-  .patch(authController.currentUser, chatController.updateUserChat);
+  .route("/updateChat")
+  .patch(authController.protectAccess, chatController.updateUserChat);
 
 module.exports = router;

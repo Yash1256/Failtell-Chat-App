@@ -3,6 +3,8 @@ const chatModel = require("../models/chatModel");
 const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const { v4: uuid_v4 } = require("uuid");
+const { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } = require("constants");
+const { findOne } = require("./../models/userModel");
 
 const SignToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -78,7 +80,6 @@ exports.protectAccess = async (req, res, next) => {
   if (req.cookies && req.cookies.jwt) token = req.cookies.jwt;
   if (req.body && req.body.token) token = req.body.token;
   if (req.query && req.query.token) token = req.query.token;
-
   if (!token) {
     return res.status(401).json({
       message: "You are not logged in",
@@ -96,7 +97,6 @@ exports.isLoggedIn = async (req, res, next) => {
   if (req.cookies && req.cookies.jwt) token = req.cookies.jwt;
   if (req.body && req.body.token) token = req.body.token;
   if (req.query && req.query.token) token = req.query.token;
-  console.log("params: ", token);
   if (!token) {
     return res.status(401).json({
       message: "You are not logged in",
@@ -112,7 +112,6 @@ exports.isLoggedIn = async (req, res, next) => {
   });
 };
 exports.assignRoom = async (req, res) => {
-  // console.log("I camehere bhai");
   const userId = req.user.id;
   const assignWith = req.params.chatWithUsername;
   if (assignWith == req.user.username) {
@@ -120,8 +119,6 @@ exports.assignRoom = async (req, res) => {
       message: "You are not allowed chat with yourself here",
     });
   }
-  // console.log("Came here");
-  // console.log(assignWith);
   const searchUser = await User.findOne({ username: assignWith });
   if (searchUser) {
     var found = false,
@@ -161,14 +158,15 @@ exports.assignRoom = async (req, res) => {
   });
 };
 
-exports.currentUser = async (req, res, next) => {
-  const user = await User.findOne({ username: req.params.username });
-  if (user) {
-    req.user = user;
-  } else {
-    return res.staus(404).json({
-      message: "Not Authorized",
+exports.getMe = async (req, res) => {
+  const userdata = await User.findOne({ username: req.body.reciever });
+  if (userdata) {
+    return res.status(200).json({
+      data: userdata._id,
     });
   }
-  next();
+  res.status(400).json({
+    status: "Fail",
+    message: "No Such User Found",
+  });
 };

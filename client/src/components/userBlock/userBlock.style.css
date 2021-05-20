@@ -5,6 +5,7 @@
   background-color: rgb(36, 37, 39);
   color: white;
   box-shadow: 0px 1px 1px 0px white;
+  margin-bottom: 2px;
 }
 .user-avatar {
   float: left;

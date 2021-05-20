@@ -2,21 +2,20 @@ const chatting = require(`${__dirname}/../models/chatModel`);
 const User = require("./../models/userModel");
 
 exports.startUserChat = async (req, res, next) => {
-  if (req.body.username === req.user.username) {
+  if (req.body.reciever === req.user.username) {
     return res.status(400).json({
       status: "Fail",
       message: "You can't talk to yourself",
     });
   }
   const endUser = await User.find({
-    username: req.body.username,
+    username: req.body.reciever,
   });
-  // console.log(req.user);
   if (endUser) {
     const createdChat = await chatting.create({
       message: req.body.message,
-      // sender: req.user.id,
-      // reciever: endUser[0].id,
+      sender: req.user.id,
+      reciever: endUser[0]._id,
       createdDate: Date.now(),
     });
     return res.status(200).json({
@@ -31,22 +30,22 @@ exports.startUserChat = async (req, res, next) => {
 };
 
 exports.getUserChats = async (req, res) => {
-  // console.log(req.query);
+  const reciever = await User.findOne({ username: req.query.reciever });
   const getChat = await chatting
     .find({
       $or: [
         {
           sender: req.user.id,
-          reciever: req.query.recieverUserId,
+          reciever: reciever._id,
         },
         {
-          sender: req.query.recieverUserId,
+          sender: reciever._id,
           reciever: req.user.id,
         },
       ],
     })
     .sort({ createdDate: 1 });
-  if (getChat.length > 0) {
+  if (getChat.length >= 0) {
     return res.status(200).json({
       status: "ok",
       getChat,
