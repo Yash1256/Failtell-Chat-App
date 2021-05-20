@@ -12,6 +12,7 @@ export const FriendFilter = ()=>{
         <div className="leftHeader">
             <input className="friend-filter" type="search" name="" id="" />
         </div>
+
    )
     
 }

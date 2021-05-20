@@ -44,7 +44,7 @@
   width: 10%;
 }
 .right-avatar {
-  margin: 5px 10px 0px 12px;
+  margin: 5px 15px 0px 12px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -52,9 +52,10 @@
   border-radius: 50%;
 }
 .right-username {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   font-family: cursive;
+  padding-top: 10px;
 }
 .extraWith {
   width: calc(100% - 85px);
@@ -68,7 +69,9 @@
   background-color: rgb(48, 233, 72);
   border: 1px solid black;
   padding: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  overflow: hidden;
 }
 .fromYou {
   border-radius: 10px;

@@ -78,7 +78,7 @@ export const P2PChatBox = (username)=>{
                 <img className="right-avatar" src={test} alt="" />
                 <span className="extraWith"> 
                     <div className="right-username">
-                        {localStorage.getItem("rememberMe")}
+                        notChatting
                     </div>
                 </span>
             </div>

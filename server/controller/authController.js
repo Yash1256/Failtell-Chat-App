@@ -76,6 +76,9 @@ exports.protectAccess = async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
   if (req.cookies && req.cookies.jwt) token = req.cookies.jwt;
+  if (req.body && req.body.token) token = req.body.token;
+  if (req.query && req.query.token) token = req.query.token;
+
   if (!token) {
     return res.status(401).json({
       message: "You are not logged in",
@@ -91,8 +94,9 @@ exports.protectAccess = async (req, res, next) => {
 exports.isLoggedIn = async (req, res, next) => {
   let token = undefined;
   if (req.cookies && req.cookies.jwt) token = req.cookies.jwt;
-  // console.log(token);
-
+  if (req.body && req.body.token) token = req.body.token;
+  if (req.query && req.query.token) token = req.query.token;
+  console.log("params: ", token);
   if (!token) {
     return res.status(401).json({
       message: "You are not logged in",
@@ -104,6 +108,7 @@ exports.isLoggedIn = async (req, res, next) => {
   res.locals.user = currentUser;
   return res.status(200).json({
     message: "user is loggedIn",
+    user: currentUser,
   });
 };
 exports.assignRoom = async (req, res) => {
